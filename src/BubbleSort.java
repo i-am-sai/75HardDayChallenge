@@ -1,4 +1,6 @@
 import java.util.Arrays;
+import java.util.ArrayList;
+
 
 public class BubbleSort {
 
@@ -18,6 +20,9 @@ public class BubbleSort {
         System.out.println(Arrays.toString(arr));
         bubble(arr);
         System.out.println(Arrays.toString(arr));
+        String s = "{Mp:saf[dfds}]";
+        ArrayList<String> ar = new ArrayList<>();
 
+        System.out.println(ar);
     }
 }
