@@ -18,7 +18,7 @@ public class BinarySearch {
                 start = mid +1;
             }
         }
-        return arr[start];
+        return -1;
     }
     public static void main(String[] args) {
         int[] arr ={1,2,4,6,7,9};

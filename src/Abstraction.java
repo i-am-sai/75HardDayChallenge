@@ -42,7 +42,6 @@ class Abstraction {
 
 // calls the method of the Triangle class
         t1.getArea();
-
 // calls the method of Polygon
         t1.getPerimeter(2, 3, 4);
     }
