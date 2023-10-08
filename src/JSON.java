@@ -1,111 +1,49 @@
-import java.util.ArrayList;
+import java.util.Scanner;
 
 public class JSON {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the JSON string: ");
+        String input = scanner.nextLine();
 
-    private static String tab = "\t";
-    public static String addTabs(int count) {
-        StringBuilder tabs = new StringBuilder();
-        for(int j = 0; j < count; j++){
-            tabs.append(tab);
-        }
-
-        return tabs.toString();
+        String formattedJson = formatJson(input);
+        System.out.println("Formatted JSON:");
+        System.out.println(formattedJson);
     }
 
-    public static ArrayList<String> prettyJSON(String str) {
-        // A pointer to the last row.
-        int r = 0;
+    public static String formatJson(String input) {
+        StringBuilder formattedJson = new StringBuilder();
+        int indentationLevel = 0;
+        boolean insideQuotes = false;
 
-        ArrayList<StringBuilder> result = new ArrayList<StringBuilder>();
-        result.add(new StringBuilder(""));
+        for (char c : input.toCharArray()) {
+            if (c == '"') {
+                insideQuotes = !insideQuotes;
+            }
 
-        int brace = 1;
-        for (int i = 0; i < str.length(); ++i) {
-            switch (str.charAt(i)) {
-                // Space just ignore.
-                case ' ':
-                    continue;
-
-                case '{':
-                case '[':
-                    // If first brace.
-                    if (brace == 1 && r == 0) {
-                        result.get(r).append(str.charAt(i));
-                    } else {
-                        // Make a new line and add adequate spaces and increment braces.
-                        result.add(new StringBuilder(""));
-                        r++;
-                        result.get(r).append(addTabs(brace));
-                        result.get(r).append(str.charAt(i));
-                        ++brace;
-                    }
-                    result.add(new StringBuilder(""));
-                    r++;
-                    result.get(r).append(addTabs(brace));
-                    break;
-
-                case '}':
-                case ']':
-                    // Make a new line and decrement braces.
-                    if (brace > 1) {
-                        result.add(new StringBuilder(""));
-                        r++;
-                        result.get(r).append(addTabs(brace));
-                        result.get(r).append(str.charAt(i));
-                        --brace;
-                    } else {
-                        result.add(new StringBuilder(""));
-                        r++;
-                        result.get(r).append(str.charAt(i));
-                        --brace;
-                    }
-                    break;
-
-                case ',':
-                    result.get(r).append(str.charAt(i));
-                    // Corner case check.
-                    if (str.charAt(i + 1) == '{' || str.charAt(i + 1) == '[')
-                        continue;
-                    else {
-                        result.add(new StringBuilder(""));
-                        r++;
-                        result.get(r).append(addTabs(brace));
-                    }
-                    break;
-
-                case ':':
-                    result.get(r).append(str.charAt(i));
-                    if (str.charAt(i + 1) == '{' || str.charAt(i + 1) == '[') {
-                        result.add(new StringBuilder(""));
-                        r++;
-                        result.get(r).append(addTabs(brace));
-                        i++;
-                        result.get(r).append(str.charAt(i));
-                        ++brace;
-                        if (str.charAt(i + 1) != '{' && str.charAt(i + 1) != '[') {
-                            result.add(new StringBuilder(""));
-                            r++;
-                            result.get(r).append(addTabs(brace));
-                            i++;
-                            result.get(r).append(str.charAt(i));
-                        }
-                    }
-                    break;
-
-                default:
-                    // For all other cases.
-                    result.get(r).append(str.charAt(i));
-                    break;
+            if (c == '{' || c == '[') {
+                formattedJson.append(c).append('\n');
+                indentationLevel++;
+                appendIndentation(formattedJson, indentationLevel);
+            } else if (c == '}' || c == ']') {
+                formattedJson.append('\n');
+                indentationLevel--;
+                appendIndentation(formattedJson, indentationLevel);
+                formattedJson.append(c);
+            } else if (c == ',') {
+                formattedJson.append(c).append('\n');
+                appendIndentation(formattedJson, indentationLevel);
+            } else {
+                formattedJson.append(c);
             }
         }
-        ArrayList<String> res = new ArrayList();
-        for (StringBuilder sb : result) {
-            res.add(sb.toString());
-        }
-        return res;
+
+        return formattedJson.toString();
     }
 
-    public static void main(String[] args) {
-   String s ="{Sai}";
+    private static void appendIndentation(StringBuilder sb, int indentationLevel) {
+        for (int i = 0; i < indentationLevel; i++) {
+            sb.append("**"); // You can customize the indentation as needed
+        }
     }
 }
