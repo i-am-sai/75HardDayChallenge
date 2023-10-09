@@ -1,46 +1,35 @@
 import java.util.Arrays;
 
-public class practise {
+class Practise {
 
-
-    public static String json(String str){
-        StringBuilder s = new StringBuilder();
-        int indent = 0;
-        boolean check = false;
-        for(char ch : str.toCharArray()){
-            if(ch == '"'){
-                check = !check;
-            }
-            else if(ch == '{' || ch == '['){
-                s.append(ch).append('\n');
-                indent++;
-                space(s,indent);
-
-            }
-            else if(ch == '}' || ch == ']'){
-                s.append('\n');
-                indent--;
-                space(s,indent);
-                s.append(ch);
-            }
-            else if(ch==','){
-                s.append(ch).append('\n');
-                space(s,indent);
-            }
-            else{
-                s.append(ch);
-            }
+    static int[] reverse(int[] arr, int s, int e){
+        while(s<e){
+            int temp = arr[s];
+            arr[s] = arr[e];
+            arr[e] = temp;
+            s++;
+            e--;
         }
-        return s.toString();
+        return arr;
     }
-     public static void space(StringBuilder s, int indent){
-        for(int i =0; i<indent; i++){
-            s.append("**");
-        }
-    }
+
 
     public static void main(String[] args) {
-        String str = "{[Sai: Courage,Swaroop:Can do it.]}";
-        System.out.println(json(str));
+        int[] arr ={2,3,4,5};
+        int n =5;
+        int sum = n*(n+1)/2;
+        System.out.println(sum);
+        int insum = 0;
+        for(int i =0; i<arr.length; i++){
+            insum += arr[i];
+        }
+        int misDigit = sum - insum;
+        System.out.println(misDigit);
+
+
+
+
+
+
     }
 }
