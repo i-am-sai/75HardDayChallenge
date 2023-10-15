@@ -1,20 +1,37 @@
 public class PerfectNo {
 
-    static boolean check(int i){
-        int n =i;
+    static int[] PerNo(int s, int e){
+        int result = 0;
         int count = 0;
-        while(n > 0){
-            int s = n/10;
-            if(i%s ==0 && s!=0){
-              count = count *10 + s;
+        for(int i = s; i<=e; i++){
+            if(i < 10){
+                result += i;
+                count++;
             }
-            if(s == i) {
-                return true;
+            else{
+                boolean flag = true;
+                int n = i;
+                while( n>0 && flag == true) {
+                    int d = n % 10;
+                    if (d == 0 || i % d != 0) {
+                        flag = false;
+                    }
+                    n = n / 10;
+                }
+                if(flag == true) {
+                    result += i;
+                    count++;
+                }
+
             }
-            n = n/10;
+
         }
-        return false;
+        int[] a = new int[2];
+        a[0] = result;
+        a[1] = count;
+        return a;
     }
+
     public static void main(String[] args) {
         int start = 1;
         int end = 10;
