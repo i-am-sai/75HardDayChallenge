@@ -70,7 +70,8 @@ class D{
     }
 }
 
-class practise{
+
+class OOPS{
 public static void main(String[]args){
 A vehicle = new C(70,100,"Car");
 vehicle.car();
